@@ -56,7 +56,7 @@ defaults:
       comments: "true"
 
 # Serving
-url: "www.drewmaring.dev"
+url: ""
 baseurl: ""
 
 # Includes
