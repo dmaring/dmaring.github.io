@@ -1,0 +1,81 @@
+# General Settings
+name: Drew Maring
+job_title: Software Developer
+email: andrew.maring@gmail.com
+description: Full Stack Software Developer
+avatar: /assets/pictures/drew_fiver_cropped.png
+favicon: /favicon.ico
+twitter_handler: drewmaring
+analytics_code: UA-XXXXXXX-2
+disqus: your_disqus_site
+
+# Social Accounts
+social_networks:
+# -  { name: facebook, url: '' }
+-  { name: twitter, url: 'http://twitter.com/drewmaring' }
+-  { name: instagram, url: '' }
+-  { name: google-plus, url: '' }
+-  { name: linkedin, url: 'http://www.linkedin.com/in/drew-maring-0a7b8b9' }
+-  { name: skype, url: '' }
+-  { name: github, url: '' }
+-  { name: codepen, url: '' }
+-  { name: stack-overflow, url: '' }
+-  { name: dribbble, url: '' }
+-  { name: behance, url: '' }
+-  { name: pinterest, url: '' }
+-  { name: tumblr, url: '' }
+-  { name: youtube, url: '' }
+-  { name: vimeo, url: '' }
+-  { name: vine, url: '' }
+-  { name: 500px, url: '' }
+-  { name: flickr, url: '' }
+-  { name: spotify, url: '' }
+-  { name: steam, url: '' }
+-  { name: wordpress, url: '' }
+-  { name: xing, url: '' }
+-  { name: bitcoin, url: '' }
+-  { name: pocket, url: '' }
+-  { name: applemusic, url: '' }
+
+# Modules Settings
+show_categories: 1
+show_tags: 1
+show_email: 1
+show_rss: 1
+show_comments: 0
+show_menu: 1
+fixed_sidebar: 1
+
+# Defaults
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      comments: "true"
+
+# Serving
+url: "www.drewmaring.com"
+baseurl: ""
+
+# Includes
+include: ["_pages"]
+
+# Outputting
+permalink: /:categories/:title.html
+category_dir: categories
+
+# Pagination
+paginate: 10
+paginate_path: "/page:num/"
+
+# Conversion
+markdown: kramdown
+excerpt_separator: <!--more-->
+
+# Assets Settings
+sass:
+  sass_dir: assets/partials
+  style: compressed
+

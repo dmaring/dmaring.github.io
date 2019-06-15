@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Everything is an object in Python | Drew Maring &mdash; Software Developer </title>
+    <meta property="og:title" content="Everything is an object in Python | Drew Maring &mdash; Software Developer " />
+    <meta name="twitter:title" content="Everything is an object in Python | Drew Maring &mdash; Software Developer " />
+
+    <meta name="description" content="Things to know about Python objects">
+    <meta name="description" property="og:description" content="Things to know about Python objects" />
+    <meta name="twitter:description" content="Things to know about Python objects" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <meta name="twitter:site" content="@drewmaring" />
+    
+    <meta property="og:url" content="http://localhost:4000/post/everything-is-an-object-in-python.html" />
+
+    <meta property="og:image" content="" />
+    <meta name="twitter:image" content="" />
+
+    <meta name="author" content="Drew Maring" />
+
+    <meta name="copyright" content="Copyright by Drew Maring. All Rights Reserved." />
+
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfVtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v15/CWB0XYA8bzo0kSThX0UTuA.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Roboto Bold'), local('Roboto-Bold'), url(https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOFtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 900;
+            src: local('Roboto Black'), local('Roboto-Black'), url(https://fonts.gstatic.com/s/roboto/v15/mnpfi9pxYH-Go5UiibESIltXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 300;
+            src: local('Roboto Light Italic'), local('Roboto-LightItalic'), url(https://fonts.gstatic.com/s/roboto/v15/7m8l7TlFO-S3VkhHuR0at44P5ICox8Kq3LLUNMylGO4.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 400;
+            src: local('Roboto Italic'), local('Roboto-Italic'), url(https://fonts.gstatic.com/s/roboto/v15/vPcynSL0qHq_6dX7lKVByfesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 700;
+            src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'), url(https://fonts.gstatic.com/s/roboto/v15/t6Nd4cfPRhZP44Q5QAjcC44P5ICox8Kq3LLUNMylGO4.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 900;
+            src: local('Roboto Black Italic'), local('Roboto-BlackItalic'), url(https://fonts.gstatic.com/s/roboto/v15/bmC0pGMXrhphrZJmniIZpY4P5ICox8Kq3LLUNMylGO4.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+    </style>
+    
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    
+    <link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+    <link rel="canonical" href="http://localhost:4000/post/everything-is-an-object-in-python.html">
+
+    <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml">
+</head>
+
+    <body>
+        <div class="wrapper">
+            <aside class="user-profile fixed" role="complementary">
+    <div class="burger">
+        <input class="trigger hidden" id="toggleBurger" type="checkbox" />
+        <label for="toggleBurger">
+            <span>Navigation</span>
+        </label>
+    </div>
+
+    <div class="compact-header">
+        <a class="avatar" href="http://localhost:4000"><img alt="Avatar" src="/assets/pictures/drew_fiver_cropped.png" /></a>
+        <div class="my-info">
+            <strong class="my-name">Drew Maring</strong>
+            <span class="my-job-title">Software Developer</span>
+        </div>
+    </div>
+
+    
+        
+        <div class="mainmenu">
+            <a href="http://localhost:4000" >Home</a>
+            
+                
+            
+                
+            
+                
+            
+                
+                    <a href="http://localhost:4000/about/" >About</a>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </div>
+        
+    
+
+    <p class="about-me">Full Stack Software Developer</p>
+
+    <ul class="socials">
+        <li><a href="http://twitter.com/drewmaring"><svg title="twitter" width="16" height="16" ><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#twitter-icon"></use></svg></a></li><li><a href="http://www.linkedin.com/in/drew-maring-0a7b8b9"><svg title="linkedin" width="16" height="16" ><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#linkedin-icon"></use></svg></a></li>
+
+        
+            <li><a href="mailto:andrew.maring@gmail.com"><svg title="" width="16" height="16"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#email-icon"></use></svg></a></li>
+        
+
+        
+         <li><a href="http://localhost:4000/feed.xml"><svg title="" width="16" height="16"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#rss-icon"></use></svg></a></li>
+        
+    </ul>
+</aside>
+
+            <main class="the-content" role="main">
+                <div class="search" role="search">
+    <div>
+        <div class="show-results-count">0 Results</div>
+        <div class="search-holder">
+            <input type="text" id="search-input" placeholder="search for..." />
+        </div>
+    </div>
+    <ul id="results-container" class="results-container"></ul>
+</div>
+
+
+                <article class="post single" role="article" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <ul>
+            <li><time datetime="2019-05-29T12:36:00-07:00" itemprop="datePublished">29 May, 2019</time></li>
+            
+                
+                <li class="cats">
+                    
+                        <a href="/categories/post/">post</a>
+                    
+                </li>
+                
+            
+        </ul>
+        <h2 itemprop="name headline">Everything is an object in Python</h2>
+    </header>
+
+    <div class="post-content">
+        <figure>
+    <img src="https://cdn-images-1.medium.com/max/1600/0*eLIwkTU8ms0jAzyE" />
+</figure>
+
+<p>Python is really an amazing high level programming language. It’s relatively easy to learn and promotes simple syntax and easily readable code. Python’s adoption has exploded resulting in thousands of useful modules to extend the functionality of your code.</p>
+
+<p>A unique characteristic of the language is that everything in Python is an object. <strong>Integers, Strings, Lists, Tuples, and Dictionaries are all represented as objects. Even functions are represented by objects.</strong> This leads to some interesting behavior while assigning variables to objects as well as passing our objects to functions.</p>
+
+<p>We can investigate objects in python using a few built in functions: id and type. The id() function is very useful to find the unique identifier for an object. When using CPython, the value returned by id() is the memory address where the object is stored.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="s">"hello"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="mi">140492286431160</span></code></pre></figure>
+
+<!--more-->
+<p>The output of id() and the memory address will be different each time you run the interpreter given that Python dynamically chooses where to place objects in memory.</p>
+
+<p>What if we want to know what type an object is based on the variable assigned to it? We can use the type() builtin function to accomplish this.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="s">"hello"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="s">"&lt;class 'str'&gt;"</span></code></pre></figure>
+
+<p>Python has both mutable and immutable object types. It behooves anyone working with Python to understand the mutability aspects of Python objects and the nuances that come along with it.</p>
+
+<p>First of all, an object is mutable if it is able to be modified. For example, a list is a mutable object type in Python. In the following example, a list is appended (and thus modified) so that an additional item is added to the list. This demonstrates the mutability of the list object.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span></code></pre></figure>
+
+<p>We call the list’s append method which modifies itself with the addition of the integer 4.</p>
+
+<p>Alternatively, strings are an immutable object type in Python. This means that they are not able to be modified after they are created. For the following word, let’s try to replace the first character in the string.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">my_string</span> <span class="o">=</span> <span class="s">"hello"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="s">'h'</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">"j"</span>
+    <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+      <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="nb">TypeError</span><span class="p">:</span> <span class="s">'str'</span> <span class="nb">object</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">support</span> <span class="n">item</span> <span class="n">assignment</span></code></pre></figure>
+
+<p>A TypeError is thrown telling us that we aren’t able to modify the string.</p>
+
+<p>The first thing to keep in mind when using mutable and immutable objects is how assignment works for these different objects. Mutable objects in Python include lists, sets, and dictionaries. Immutable object types include integers, floats, strings, and tuples.</p>
+
+<p>There are two operators used to test for equality of two objects or the sameness of two objects. The “==” will test whether the values of two objects are equal to each other. The “is” operator will check if variables are referencing the same object.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">list_a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">list_b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">list_a</span> <span class="o">==</span> <span class="n">list_b</span>
+    <span class="bp">True</span></code></pre></figure>
+
+<p>We can see that the values of list_a and list_b are indeed equal to each other. However, are list_a and list_b referring to the same list or just two lists of equal values?</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">list_a</span> <span class="ow">is</span> <span class="n">list_b</span>
+    <span class="bp">False</span></code></pre></figure>
+
+<p>As you probably predicted, list_a and list_b are different list objects although they have the same values. A quick use of id() to show their unique memory values confirms this.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span>
+    <span class="mi">140492279077704</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">list_b</span><span class="p">)</span>
+    <span class="mi">140492246777608</span></code></pre></figure>
+
+<p>Alternatively, we can make the lists refer to the same object by variable assignment.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">list_a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">list_b</span> <span class="o">=</span> <span class="n">list_a</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">list_b</span> <span class="ow">is</span> <span class="n">list_a</span>
+    <span class="bp">True</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">list_b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span></code></pre></figure>
+
+<p>Interesting, because we assigned list_b to the list_b variable, both lists now refer to the same object. Therefore, when the object value is modified through the variable reference of one, the value referenced by the other variable is also changed.</p>
+
+<p>Let’s take a look at the string type. Remember we mentioned before that string objects are immutable in Python.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">str_a</span> <span class="o">=</span> <span class="s">"hello"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">str_b</span> <span class="o">=</span> <span class="s">"hello"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">str_a</span> <span class="o">==</span> <span class="n">str_b</span>
+    <span class="bp">True</span></code></pre></figure>
+
+<p>We can see here two assignments of strings to variables str_a and str_b. Predictably, we can compare the two using “==” and see that the values are equal to each other.</p>
+
+<p>What do you think will happen if we test if str_a and str_b refer to the same object?</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">str_a</span> <span class="ow">is</span> <span class="n">str_b</span>
+    <span class="bp">True</span></code></pre></figure>
+
+<p>What? We see clearly in the previous code block that we declare two variables with two equal value strings of the same type. This isn’t a mistake. Python has pulled a subtle trick to conserve resources and created only one object for the string “hello”. When str_b is assigned to “hello” Python recognizes an opportunity to conserve memory space. Python can get away with doing this because the string is an immutable object and can never be changed. Therefore, instead of storing two immutable string objects, Python stores one and adds references to the immutable object at variable assignment.</p>
+
+<p>So what will happen if we reassign str_a to “goodbye”? Will str_b’s object value change?</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">str_a</span> <span class="o">=</span> <span class="s">"goodbye"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">str_b</span><span class="p">)</span>
+    <span class="n">hello</span></code></pre></figure>
+
+<p>We can see that str_b will not be modified since str_a simply references a new object while str_b continues to reference the “hello” object.</p>
+
+<p>The important difference between how Python treats immutable and mutable objects carries over in the operation of function calls. Python passes arguments to functions “by object reference” or sometime referred to as “passing by sharing”. That is, the parameters of a function will be assigned to the referenced objects of the arguments. In other words, the parameters in the function become aliases of the actual arguments.</p>
+
+<p>What this means is that any function that is passed a mutable object will have the ability to modify that referenced object. On the other hand, for immutable objects, their immutable nature stands and the objects are not able to be modified in the called function.</p>
+
+<p>Let’s take a look at two examples of passing a mutable object and immutable object to a function and observe its effects on the original variable reference.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="k">def</span> <span class="nf">add_two</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+        <span class="n">num</span> <span class="o">+=</span> <span class="mi">2</span>
+
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">add_two</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="mi">4</span></code></pre></figure>
+
+<p>We can see that passing an immutable object (an integer) to the function and attempting to modify that object results in no affect to the object being passed.</p>
+
+<p>Let’s see what happens when we pass a mutable object to a function.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="k">def</span> <span class="nf">append_three</span><span class="p">(</span><span class="n">list_</span><span class="p">):</span>
+        <span class="n">list_</span><span class="o">.</span><span class="n">append</span><span class="p">()</span>
+
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">append_three</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span></code></pre></figure>
+
+<p>The example shows that the function produced a “side effect” and modified the list object that was passed to the function.</p>
+
+<p>Given this information it’s important to be mindful when passing mutable objects to functions. Utilizing the function may have unintended results of modifying the passed list when the actual intention was returning a new list operated on by the function.</p>
+
+<p>Therefore, it’s a good practice to make a copy of the mutable object being passed to the function in the body of the function. The function can then act on this copied mutable object and return it without modifying the original object.</p>
+
+    </div>
+
+    <footer class="post-footer">
+        <div class="share">Share
+            <ul class="social-networks">
+                <li class="share-facebook"><a href="https://www.facebook.com/sharer.php?s=100&p[title]=Everything is an object in Python&p[summary]=
+    
+
+
+Python is really an amazing high level programming language. It’s relatively easy to learn and promotes simple syntax and easily ...&p[url]=http://localhost:4000/post/everything-is-an-object-in-python.html" class="s_facebook" target="_blank" onclick="window.open(this.href, '','width=700,height=300');return false;"><svg title="" width="16" height="16"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#facebook-icon"></use></svg></a></li>
+                <li class="share-twitter"><a href="http://twitter.com/share?url=http://localhost:4000/post/everything-is-an-object-in-python.html&text=
+    
+
+
+Python is really an amazing high level programming language. It’s relatively easy to learn and promotes simple syntax and easily ...&hashtags=python,object oriented programming," rel="noreferrer" target="_blank" onclick="window.open(this.href, '','width=700,height=300');return false;"><svg title="" width="16" height="16"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#twitter-icon"></use></svg></a></li>
+            </ul>
+        </div>
+        
+        <div class="tags">
+            <ul>
+                
+                <li><a href="http://localhost:4000/tag/python">python</a></li>
+                
+                <li><a href="http://localhost:4000/tag/object oriented programming">object oriented programming</a></li>
+                
+            </ul>
+        </div>
+        
+    </footer>
+</article>
+
+
+            </main>
+        </div>
+
+        <script src="http://localhost:4000/assets/js/jquery-1.12.2.min.js"></script>
+<script src="http://localhost:4000/assets/js/backtotop.js"></script>
+<script src="http://localhost:4000/assets/js/lunr.min.js"></script>
+<script src="http://localhost:4000/assets/js/lunr-feed.js"></script>
+<script src="http://localhost:4000/assets/js/jquery.fitvids.js"></script>
+<script src="http://localhost:4000/assets/js/svg4everybody.min.js"></script>
+<script src="http://localhost:4000/assets/js/scripts.js"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-XXXXXXX-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    </body>
+</html>

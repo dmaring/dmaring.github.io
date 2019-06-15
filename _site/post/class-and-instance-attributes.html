@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Whats the deal with Class and Instance attributes? | Drew Maring &mdash; Software Developer </title>
+    <meta property="og:title" content="Whats the deal with Class and Instance attributes? | Drew Maring &mdash; Software Developer " />
+    <meta name="twitter:title" content="Whats the deal with Class and Instance attributes? | Drew Maring &mdash; Software Developer " />
+
+    <meta name="description" content="Learn the differences between class and instance attributes">
+    <meta name="description" property="og:description" content="Learn the differences between class and instance attributes" />
+    <meta name="twitter:description" content="Learn the differences between class and instance attributes" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <meta name="twitter:site" content="@drewmaring" />
+    
+    <meta property="og:url" content="http://localhost:4000/post/class-and-instance-attributes.html" />
+
+    <meta property="og:image" content="" />
+    <meta name="twitter:image" content="" />
+
+    <meta name="author" content="Drew Maring" />
+
+    <meta name="copyright" content="Copyright by Drew Maring. All Rights Reserved." />
+
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfVtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v15/CWB0XYA8bzo0kSThX0UTuA.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Roboto Bold'), local('Roboto-Bold'), url(https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOFtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 900;
+            src: local('Roboto Black'), local('Roboto-Black'), url(https://fonts.gstatic.com/s/roboto/v15/mnpfi9pxYH-Go5UiibESIltXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 300;
+            src: local('Roboto Light Italic'), local('Roboto-LightItalic'), url(https://fonts.gstatic.com/s/roboto/v15/7m8l7TlFO-S3VkhHuR0at44P5ICox8Kq3LLUNMylGO4.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 400;
+            src: local('Roboto Italic'), local('Roboto-Italic'), url(https://fonts.gstatic.com/s/roboto/v15/vPcynSL0qHq_6dX7lKVByfesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 700;
+            src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'), url(https://fonts.gstatic.com/s/roboto/v15/t6Nd4cfPRhZP44Q5QAjcC44P5ICox8Kq3LLUNMylGO4.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 900;
+            src: local('Roboto Black Italic'), local('Roboto-BlackItalic'), url(https://fonts.gstatic.com/s/roboto/v15/bmC0pGMXrhphrZJmniIZpY4P5ICox8Kq3LLUNMylGO4.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+    </style>
+    
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    
+    <link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+    <link rel="canonical" href="http://localhost:4000/post/class-and-instance-attributes.html">
+
+    <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml">
+</head>
+
+    <body>
+        <div class="wrapper">
+            <aside class="user-profile fixed" role="complementary">
+    <div class="burger">
+        <input class="trigger hidden" id="toggleBurger" type="checkbox" />
+        <label for="toggleBurger">
+            <span>Navigation</span>
+        </label>
+    </div>
+
+    <div class="compact-header">
+        <a class="avatar" href="http://localhost:4000"><img alt="Avatar" src="/assets/pictures/drew_fiver_cropped.png" /></a>
+        <div class="my-info">
+            <strong class="my-name">Drew Maring</strong>
+            <span class="my-job-title">Software Developer</span>
+        </div>
+    </div>
+
+    
+        
+        <div class="mainmenu">
+            <a href="http://localhost:4000" >Home</a>
+            
+                
+            
+                
+            
+                
+            
+                
+                    <a href="http://localhost:4000/about/" >About</a>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </div>
+        
+    
+
+    <p class="about-me">Full Stack Software Developer</p>
+
+    <ul class="socials">
+        <li><a href="http://twitter.com/drewmaring"><svg title="twitter" width="16" height="16" ><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#twitter-icon"></use></svg></a></li><li><a href="http://www.linkedin.com/in/drew-maring-0a7b8b9"><svg title="linkedin" width="16" height="16" ><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#linkedin-icon"></use></svg></a></li>
+
+        
+            <li><a href="mailto:andrew.maring@gmail.com"><svg title="" width="16" height="16"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#email-icon"></use></svg></a></li>
+        
+
+        
+         <li><a href="http://localhost:4000/feed.xml"><svg title="" width="16" height="16"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#rss-icon"></use></svg></a></li>
+        
+    </ul>
+</aside>
+
+            <main class="the-content" role="main">
+                <div class="search" role="search">
+    <div>
+        <div class="show-results-count">0 Results</div>
+        <div class="search-holder">
+            <input type="text" id="search-input" placeholder="search for..." />
+        </div>
+    </div>
+    <ul id="results-container" class="results-container"></ul>
+</div>
+
+
+                <article class="post single" role="article" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <ul>
+            <li><time datetime="2019-05-28T00:00:00-07:00" itemprop="datePublished">28 May, 2019</time></li>
+            
+                
+                <li class="cats">
+                    
+                        <a href="/categories/post/">post</a>
+                    
+                </li>
+                
+            
+        </ul>
+        <h2 itemprop="name headline">Whats the deal with Class and Instance attributes?</h2>
+    </header>
+
+    <div class="post-content">
+        <figure>
+    <img src="https://cdn-images-1.medium.com/max/2000/0*JQm7vVCDe_U4Y5F1" />
+</figure>
+
+<p>Object oriented programming (OOP) affords a us a great way to to organize and use our code. It enables us to do cool things link data encapsulation, hiding data, and data abstraction. Python, although not exclusively tied to OOP, is a wonderful programming language for practicing the OOP paradigm.</p>
+
+<p>Within this world of classes and instances, there are a few items that can get confusing at implementation. Classes are made up of attributes and methods. Further, attributes can be instance attributes or class attributes. Likewise there are instance methods and class methods.</p>
+
+<p>In this post, we’ll examine Class attributes and instance attributes. Along the way we’ll touch on Class methods and instance methods as well. What are they and what makes them different? What are the advantages and disadvantages of using either?</p>
+
+<p>So lets dive in…</p>
+
+<!--more-->
+<p>Attributes in general allow us to store information about some “thing”. For example, attributes of a dog may include: name, breed, gender, color. Attributes of a Car could include things like: color, make, year. In the case of dogs the corresponding class definition could look like:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+    <span class="s">"""A class that models a dog"""</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">breed</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">breed</span> <span class="o">=</span> <span class="n">breed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gender</span> <span class="o">=</span> <span class="n">gender</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span></code></pre></figure>
+
+<p>Then, we can initialize some dog instances of this class:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="s">'Riley'</span><span class="p">,</span> <span class="s">'Labrador'</span><span class="p">,</span> <span class="s">'Female'</span><span class="p">,</span> <span class="s">'Yellow'</span><span class="p">)</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">rando_dog</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="s">'Spot'</span><span class="p">,</span> <span class="s">'Bulldog'</span><span class="p">,</span> <span class="s">'Male'</span><span class="p">,</span> <span class="s">'Gray'</span><span class="p">)</span></code></pre></figure>
+
+<p>Great, now we have two instances of dog: Riley and Spot. We instantiated them using Dog() passing in the arguments for ‘name’, ‘breed’, ‘gender’, ‘color’. For Riley that will set <strong>instance attributes</strong> self.name = ‘Riley’, self.breed = ‘Labrador’, self.gender = ‘Yellow’.</p>
+
+<p>We know have the ability to access Riley’s particular instance of dog as well as the <strong>instance attributes</strong>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">name</span>
+<span class="n">Riley</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">breed</span>
+<span class="n">Labrador</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">gender</span>
+<span class="n">Yellow</span></code></pre></figure>
+
+<p>We could even overwrite the attributes of the my_dog instance in similar fashion:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">breed</span> <span class="o">=</span> <span class="s">'Pitbull'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">breed</span>
+<span class="n">Pitbull</span></code></pre></figure>
+
+<p>While this serves as a very straight forward way of setting and getting attributes, it doesn’t follow some of the tenants of OOB. One of them being that we aren’t protecting the user from hurting him or herself. For example, right now someone could enter a number for the name.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="mi">234</span></code></pre></figure>
+
+<p>We have no way to protect that data and the user from making the mistake of storing a number where a string should be. So how do we accomplish this? Well the first way is to only allow access to attributes through getter and setter methods, along with storing the data in private attributes.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+    <span class="s">"""A class that models a dog"""</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">breed</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">breed</span> <span class="o">=</span> <span class="n">breed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gender</span> <span class="o">=</span> <span class="n">gender</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+
+    <span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"name must be a string"</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">)</span></code></pre></figure>
+
+<p>There are a few things new here. First we’ve created two new instance methods: a setter method and a getter method.</p>
+
+<p>The setter method is now the gateway to storing the name attribute for an instance of Dog. When we call Dog(‘Riley’) to instantiate a new dog, ‘Riley’ will now be passed to our set_name method. The set_name method will check if the argument being passed to it a type of string. If it is, the set_name method will store that attribute in the __name attribute. So whats with the double underscores (aka ‘dunders’) before the name attribute. Well, in Python ‘dunders’ before an attribute name signals that the attribute is a <strong>private attribute</strong>. A private attribute cannot be accessed by anyone except for the instance itself. Therefore, here is some new behavior:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">__name</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nb">AttributeError</span><span class="p">:</span> <span class="s">'Dog'</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s">'__name'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="s">'Riley'</span></code></pre></figure>
+
+<p>This now returns an “object has no attribute” error because __name is a private instance. However, we can access the __name attribute indirectly using our newly created getter method get_name.</p>
+
+<p>So this is great, we get to protect our attributes and the users from using them in unintended ways. However, having to use a setter and getter like this is rather cumbersome and takes a way from the simplicity of being able to access and set attributes using the dot notation (e.g. my_dog.name = “Riley”) . How could we keep the same benefits that the getter and setter methods give us to protect our attributes while making it easier for the user to interface?</p>
+
+<p>The answer in Python is to use the @ property decorator. The @ property decorator is a special wrapper function that allows us to make getter and setter like functions but still allow the use of the ‘dot’ notation to access and set those attributes. The @ property will serve to define our attribute and allow access to an otherwise private attribute. Correspondingly we will use the @ <em>attribute</em>.setter decorator to create a function that will set the private attribute using the ‘dot’ notation.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+    <span class="err">“””</span><span class="n">A</span> <span class="k">class</span> <span class="nc">that</span> <span class="n">models</span> <span class="n">a</span> <span class="n">dog</span><span class="err">”””</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+        <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">)</span>
+
+    <span class="o">@</span><span class="n">name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="err">“</span><span class="n">name</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">string</span><span class="err">”</span><span class="p">)</span></code></pre></figure>
+
+<p>Now the user can set the name attribute as well as get the name attribute. All without being the wiser that name is being checked for correct type and the get method is accessing the value from a private attribute.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="s">'Riley'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">name</span>
+<span class="s">'Riley'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Spot'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">name</span>
+<span class="s">'Spot'</span></code></pre></figure>
+
+<p>Let’s finally get to the second type of attributes: <strong>Class attributes</strong>. Class attributes belong to the class and can be accessed by any instance instantiated by the class. However, unlike instance attributes, there is only one copy of a Class attribute and it is shared amongst all instances of that class. An example will make this more clear.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+
+	<span class="s">"""A class that models a dog"""</span>
+	<span class="n">number_of_dogs</span> <span class="o">=</span> <span class="mi">0</span>
+	
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+	<span class="o">@</span><span class="nb">property</span>
+	<span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">)</span>
+
+	<span class="o">@</span><span class="n">name</span><span class="o">.</span><span class="n">setter</span>
+	<span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">value</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"name must be a string"</span><span class="p">)</span>
+                    
+ </code></pre></figure>
+
+<p>We’ve now created a <strong>Class attribute</strong> “number_of_dogs” and initialized it to 0. We will use this Class attribute to keep track of the number of dogs created (instantiated) for the Dog class.</p>
+
+<p>We can access and manipulate the Class attribute through the Class namespace.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">Dog</span><span class="o">.</span><span class="n">number_of_dogs</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Dog</span><span class="o">.</span><span class="n">number_of_dogs</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Dog</span><span class="o">.</span><span class="n">number_of_dogs</span>
+<span class="mi">1</span>
+    </code></pre></figure>
+
+<p>Now that we have a Class attribute we need a way of updating the number of dogs when a Dog is instantiated. For this we will create a class method. A class method is a method that belongs to the class and subsequently calls itself as its first argument.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+    <span class="s">"""A class that models a dog"""</span>
+    <span class="n">number_of_dogs</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">Dog</span><span class="o">.</span><span class="n">add_dog</span><span class="p">()</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+        <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">)</span>
+
+    <span class="o">@</span><span class="n">name</span><span class="o">.</span><span class="n">setter</span>
+        <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"name must be a string"</span><span class="p">)</span>
+    
+    <span class="o">@</span><span class="nb">classmethod</span>
+        <span class="k">def</span> <span class="nf">add_dog</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+            <span class="n">cls</span><span class="o">.</span><span class="n">number_of_dogs</span> <span class="o">+=</span> <span class="mi">1</span></code></pre></figure>
+
+<p>We add the @ classmethod add_dog which takes in the class as its only argument. We then add 1 to the Class attribute number of dogs to increment the overall number of dogs.</p>
+
+<p>Every Class and instance of the class stores a dictionary in the attribute ‘<strong>dict</strong>’ containing all of its attributes. It’s a useful thing to know when you want to quickly see all the attributes contained in your instance.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="s">'Riley'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">__dict__</span>
+<span class="p">{</span><span class="s">'_Dog__name'</span><span class="p">:</span> <span class="s">'Riley'</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Dog</span><span class="o">.</span><span class="n">number_of_dogs</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rando_dog</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="s">'Spot'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Dog</span><span class="o">.</span><span class="n">number_of_dogs</span>
+<span class="mi">2</span></code></pre></figure>
+
+<p>So there you have it. Class attributes and instance attributes are very different things but can work together to do some really cool stuff. Class attributes hold data shared by any and all instances instantiated of that class. Those class attributes are accessed through the namespace of the class itself. Instance attributes are unique to the instances instantiated. Instance attributes are accessed through the instance’s namespace. Python gives us a great “pythonic” way of using decorators to protect our attributes and users while keeping a uniform interface to the attribute themselves.</p>
+
+    </div>
+
+    <footer class="post-footer">
+        <div class="share">Share
+            <ul class="social-networks">
+                <li class="share-facebook"><a href="https://www.facebook.com/sharer.php?s=100&p[title]=Whats the deal with Class and Instance attributes?&p[summary]=
+    
+
+
+Object oriented programming (OOP) affords a us a great way to to organize and use our code. It enables us to do cool things link ...&p[url]=http://localhost:4000/post/class-and-instance-attributes.html" class="s_facebook" target="_blank" onclick="window.open(this.href, '','width=700,height=300');return false;"><svg title="" width="16" height="16"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#facebook-icon"></use></svg></a></li>
+                <li class="share-twitter"><a href="http://twitter.com/share?url=http://localhost:4000/post/class-and-instance-attributes.html&text=
+    
+
+
+Object oriented programming (OOP) affords a us a great way to to organize and use our code. It enables us to do cool things link ...&hashtags=python,object oriented programming," rel="noreferrer" target="_blank" onclick="window.open(this.href, '','width=700,height=300');return false;"><svg title="" width="16" height="16"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://localhost:4000/assets/svg/social-icons.svg#twitter-icon"></use></svg></a></li>
+            </ul>
+        </div>
+        
+        <div class="tags">
+            <ul>
+                
+                <li><a href="http://localhost:4000/tag/python">python</a></li>
+                
+                <li><a href="http://localhost:4000/tag/object oriented programming">object oriented programming</a></li>
+                
+            </ul>
+        </div>
+        
+    </footer>
+</article>
+
+
+            </main>
+        </div>
+
+        <script src="http://localhost:4000/assets/js/jquery-1.12.2.min.js"></script>
+<script src="http://localhost:4000/assets/js/backtotop.js"></script>
+<script src="http://localhost:4000/assets/js/lunr.min.js"></script>
+<script src="http://localhost:4000/assets/js/lunr-feed.js"></script>
+<script src="http://localhost:4000/assets/js/jquery.fitvids.js"></script>
+<script src="http://localhost:4000/assets/js/svg4everybody.min.js"></script>
+<script src="http://localhost:4000/assets/js/scripts.js"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-XXXXXXX-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    </body>
+</html>
