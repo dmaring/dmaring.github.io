@@ -6,7 +6,7 @@ description: Full Stack Software Developer
 avatar: /assets/pictures/drew_fiver_cropped.png
 favicon: /favicon.ico
 twitter_handler: drewmaring
-analytics_code: UA-XXXXXXX-2
+analytics_code: UA-105319555-1
 disqus: your_disqus_site
 
 # Social Accounts
@@ -56,7 +56,7 @@ defaults:
       comments: "true"
 
 # Serving
-url: "www.drewmaring.com"
+url: "www.drewmaring.dev"
 baseurl: ""
 
 # Includes
