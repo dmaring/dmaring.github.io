@@ -1,4 +1,4 @@
-var hostname = "dmaring.github.io/";
+var hostname = "https://www.drewmaring.dev";
 var index = lunr(function () {
     this.field('title')
     this.field('content', {boost: 10})
