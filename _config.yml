@@ -56,7 +56,7 @@ defaults:
       comments: "true"
 
 # Serving
-url: "http://dmaring.github.io"
+url: "https://dmaring.github.io"
 baseurl: ""
 
 # Includes
