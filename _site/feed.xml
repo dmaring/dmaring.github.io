@@ -3,10 +3,10 @@
   <channel>
     <title></title>
     <description>Full Stack Software Developer</description>
-    <link>https://www.drewmaring.dev/</link>
-    <atom:link href="https://www.drewmaring.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 15 Jun 2019 12:47:39 -0700</pubDate>
-    <lastBuildDate>Sat, 15 Jun 2019 12:47:39 -0700</lastBuildDate>
+    <link>http://www.drewmaring.dev/</link>
+    <atom:link href="http://www.drewmaring.dev/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 15 Jun 2019 13:01:48 -0700</pubDate>
+    <lastBuildDate>Sat, 15 Jun 2019 13:01:48 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -149,8 +149,8 @@
 &lt;p&gt;Therefore, it’s a good practice to make a copy of the mutable object being passed to the function in the body of the function. The function can then act on this copied mutable object and return it without modifying the original object.&lt;/p&gt;
 </description>
         <pubDate>Wed, 29 May 2019 12:36:00 -0700</pubDate>
-        <link>https://www.drewmaring.dev/post/everything-is-an-object-in-python.html</link>
-        <guid isPermaLink="true">https://www.drewmaring.dev/post/everything-is-an-object-in-python.html</guid>
+        <link>http://www.drewmaring.dev/post/everything-is-an-object-in-python.html</link>
+        <guid isPermaLink="true">http://www.drewmaring.dev/post/everything-is-an-object-in-python.html</guid>
         
         <category>python</category>
         
@@ -350,8 +350,8 @@
 &lt;p&gt;So there you have it. Class attributes and instance attributes are very different things but can work together to do some really cool stuff. Class attributes hold data shared by any and all instances instantiated of that class. Those class attributes are accessed through the namespace of the class itself. Instance attributes are unique to the instances instantiated. Instance attributes are accessed through the instance’s namespace. Python gives us a great “pythonic” way of using decorators to protect our attributes and users while keeping a uniform interface to the attribute themselves.&lt;/p&gt;
 </description>
         <pubDate>Tue, 28 May 2019 00:00:00 -0700</pubDate>
-        <link>https://www.drewmaring.dev/post/class-and-instance-attributes.html</link>
-        <guid isPermaLink="true">https://www.drewmaring.dev/post/class-and-instance-attributes.html</guid>
+        <link>http://www.drewmaring.dev/post/class-and-instance-attributes.html</link>
+        <guid isPermaLink="true">http://www.drewmaring.dev/post/class-and-instance-attributes.html</guid>
         
         <category>python</category>
         
